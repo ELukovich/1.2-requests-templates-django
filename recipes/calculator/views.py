@@ -30,31 +30,15 @@ DATA = {
 #     'ингредиент2': количество2,
 #   }
 # }
-# contex = {}
-def omlet(request):
-    servings = int(request.GET.get("servings", 1))
-    for i in DATA['omlet']:
-        DATA['omlet'][i] = DATA['omlet'][i] * servings
-    context = {
-        'recipe': DATA['omlet']
-    }
-    return render(request, 'calculator/index.html', context)
 
 
-def pasta(request):
-    servings = int(request.GET.get("servings", 1))
-    for i in DATA['pasta']:
-        DATA['pasta'][i] = DATA['pasta'][i] * servings
-    context = {
-        'recipe': DATA['pasta']
-    }
-    return render(request, 'calculator/index.html', context)
-
-def buter(request):
-    servings = int(request.GET.get("servings", 1))
-    for i in DATA['buter']:
-        DATA['buter'][i] = DATA['buter'][i] * servings
-    context = {
-        'recipe': DATA['buter']
-    }
+def dish_views(request, dish):
+    if dish in DATA:
+        servings = int(request.GET.get("servings", 1))
+        data = dict(DATA[dish])
+        for i in data:
+            data[i] = data[i] * servings
+        context = {
+            'recipe': data
+        }
     return render(request, 'calculator/index.html', context)
